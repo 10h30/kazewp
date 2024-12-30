@@ -1,0 +1,22 @@
+${DOMAIN} {
+    #reverse_proxy wordpress_${DOMAIN}:80
+
+    tls internal
+    root * /var/www/${DOMAIN}/html
+	encode zstd gzip
+
+    # Serve WordPress PHP files through php-fpm:
+	php_fastcgi wordpress_${DOMAIN}:9000 {
+		root /var/www/html
+	}
+
+    # Enable the static file server:
+	file_server {
+		precompressed gzip
+	}
+	header / {
+		X-Frame-Options "SAMEORIGIN"
+		X-Content-Type-Options "nosniff"
+	}
+}
+

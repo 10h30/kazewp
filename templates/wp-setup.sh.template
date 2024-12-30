@@ -1,0 +1,40 @@
+#!/bin/bash
+
+wp_cli() {
+    docker run --rm \
+        --network container:wordpress_${DOMAIN} \
+        -v "$(pwd):/var/www/html" \
+        wordpress:cli-php8.1 \
+        wp "$@"
+}
+
+wpcli() {
+    docker compose run --rm wpcli "$@"
+}
+
+echo "Waiting for MySQL to be ready..."
+#while ! docker exec db_${DOMAIN} mysqladmin ping -h localhost --silent; do
+#    sleep 1
+#done
+while [ "$(docker inspect --format='{{.State.Health.Status}}' db_${DOMAIN})" != "healthy" ]; do
+    echo "MariaDB is not healthy yet. Retrying..."
+    sleep 5
+done
+
+
+echo "Installing WordPress..."
+wpcli core install \
+    --url="https://${DOMAIN}" \
+    --title="${SITE_TITLE}" \
+    --admin_user="${ADMIN_USER}" \
+    --admin_password="${ADMIN_PASSWORD}" \
+    --admin_email="${ADMIN_EMAIL}" \
+    --skip-email
+
+echo "Installing and activating plugins..."
+wpcli plugin install wordfence --activate
+wpcli theme install twentytwentyfour --activate
+wpcli plugin update --all
+wpcli theme update --all
+
+echo "WordPress setup completed!"

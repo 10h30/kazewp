@@ -1,0 +1,61 @@
+services:
+  db_${DOMAIN}:
+    container_name: db_${DOMAIN}
+    image: mariadb:11.2-jammy
+    volumes:
+      - ./db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "--silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - ${DOMAIN}_net
+
+  wordpress_${DOMAIN}:
+    container_name: wordpress_${DOMAIN}
+    depends_on:
+      - db_${DOMAIN}
+    image: wordpress:fpm-alpine
+    volumes:
+      - ./html/:/var/www/html
+
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db_${DOMAIN}:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      - ${DOMAIN}_net
+      - caddy_net
+
+  wpcli:
+    depends_on:
+      - db_${DOMAIN}
+      - wordpress_${DOMAIN}
+    environment:
+      WORDPRESS_DB_HOST: db_${DOMAIN}:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
+    image: wordpress:cli
+    entrypoint: wp
+    command: "--info"
+    volumes_from:
+      - wordpress_${DOMAIN}
+    networks:
+      - ${DOMAIN}_net
+      - caddy_net
+
+networks:
+  ${DOMAIN}_net:
+    driver: bridge
+  caddy_net:
+    external: true
