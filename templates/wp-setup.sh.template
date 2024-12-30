@@ -1,13 +1,5 @@
 #!/bin/bash
 
-wp_cli() {
-    docker run --rm \
-        --network container:wordpress_${DOMAIN} \
-        -v "$(pwd):/var/www/html" \
-        wordpress:cli-php8.1 \
-        wp "$@"
-}
-
 wpcli() {
     docker compose run --rm wpcli "$@"
 }

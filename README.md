@@ -28,8 +28,8 @@ Ensure you have the following installed:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/CaddyWP.git
-   cd CaddyWP
+   git clone https://github.com/your-username/caddywp.git
+   cd caddywp
    ```
 
 2. **Run the install script**:
@@ -39,9 +39,11 @@ Ensure you have the following installed:
 
 ## How It Works
 
-    Caddy: Serves as a reverse proxy, automatically obtaining SSL certificates and routing traffic to the correct WordPress container.
-    WordPress: Each WordPress site is hosted in its own Docker container, ensuring that each site runs in isolation with its own environment and database.
-    MariaDB: A single MariaDB container serves as the database for all WordPress sites. Each site uses a unique database user and password.
+Caddy: Serves as a reverse proxy, automatically obtaining SSL certificates and routing traffic to the correct WordPress container.
+
+WordPress: Each WordPress site is hosted in its own Docker container, ensuring that each site runs in isolation with its own environment and database.
+
+MariaDB: A single MariaDB container serves as the database for all WordPress sites. Each site uses a unique database user and password.
 
 ## License
 

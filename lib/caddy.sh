@@ -2,7 +2,7 @@
 
 reload_caddy() {
     echo "Reloading Caddy configuration..."
-    docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+    cd "$CADDY_DIR" && docker compose restart
 }
 
 create_caddy_config() {

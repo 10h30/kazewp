@@ -87,6 +87,7 @@ while true; do
                 echo "1. Start Caddy:"
                 echo "   cd ${CADDY_DIR} && docker compose up -d"
             fi
+            reload_caddy
             echo "2. Start WordPress:"
             echo "   cd ${WP_PROJECT_DIR} && docker compose up -d"
             echo "3. Run the WordPress setup script:"
