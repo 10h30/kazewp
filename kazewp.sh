@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -11,20 +12,16 @@ source "${SCRIPT_DIR}/lib/docker.sh"
 source "${SCRIPT_DIR}/lib/caddy.sh"
 source "${SCRIPT_DIR}/lib/wordpress.sh"
 
-echo "CaddyWP: WordPress Site Management Script"
-echo "=========================="
-
-
-FIRST_TIME=false
-if ! check_container_running "caddy"; then
-    FIRST_TIME=true
-fi
-
-setup_directories
-
-
 # Function to install a new WordPress site
 install_site() {
+
+    FIRST_TIME=false
+    if ! check_container_running "caddy"; then
+        FIRST_TIME=true
+    fi
+
+    setup_directories
+
     DOMAIN="$1"
     #db_prefix="$(openssl rand -base64 6)"_
 
@@ -246,11 +243,11 @@ case "$1" in
         ;;
 
     *)
-        echo "WordPress Site Manager"
+        echo "KazeW - PWordPress Site Management Script"
         echo "Usage:"
-        echo "  $0 install <domain>  - Install a new WordPress site"
+        echo "  $0 install <domain>              - Install a new WordPress site"
         echo "  $0 list                          - List all installed WordPress sites"
-        echo "  $0 delete <site-name>            - Delete a WordPress site"
+        echo "  $0 delete <domain>            - Delete a WordPress site"
         echo "  $0 delete all                    - Delete everything"
         exit 1
         ;;

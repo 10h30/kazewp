@@ -29,7 +29,7 @@ create_env_file() {
     # Output file
     ENV_FILE=".env"
     # Generate .env file
-    echo "Generating $ENV_FILE..."
+    #echo "Generating $ENV_FILE..."
 
     cat <<EOL > "${WP_PROJECT_DIR}/$ENV_FILE"
     DOMAIN_NAME = ${DOMAIN}
@@ -53,7 +53,7 @@ create_env_file() {
     
 EOL
 
-    echo "$ENV_FILE generated successfully!"
+    #echo "$ENV_FILE generated successfully!"
 }
 
 
