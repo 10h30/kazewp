@@ -5,11 +5,8 @@ services:
     volumes:
       - ./db_data:/var/lib/mysql
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file:
+      - .env
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "--silent"]
       interval: 10s
@@ -25,13 +22,9 @@ services:
     image: wordpress:fpm-alpine
     volumes:
       - ./html/:/var/www/html
-
+    env_file:
+      - .env
     restart: always
-    environment:
-      WORDPRESS_DB_HOST: db_${DOMAIN}:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-      WORDPRESS_DB_NAME: wordpress
     networks:
       - ${DOMAIN}_net
       - caddy_net
@@ -40,11 +33,8 @@ services:
     depends_on:
       - db_${DOMAIN}
       - wordpress_${DOMAIN}
-    environment:
-      WORDPRESS_DB_HOST: db_${DOMAIN}:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-      WORDPRESS_DB_NAME: wordpress
+    env_file:
+      - .env
     image: wordpress:cli
     entrypoint: wp
     command: "--info"

@@ -47,3 +47,27 @@ start_services() {
 
     return 0
 }
+
+get_containers_status() {
+    local compose_file="$1"
+    local containers=()
+    local count=0
+    
+    while IFS= read -r container; do
+        # Skip if empty line
+        [ -z "$container" ] && continue
+        containers+=("$container")
+        ((count++))
+    done < <(docker compose -f "$compose_file" ps --status running --format '{{.Name}}')
+    
+    if [ $count -eq 0 ]; then
+        echo "Status: No container is running"
+    else
+        echo -n "Status: $count containers are running: "
+        printf "%s" "${containers[0]}"
+        for ((i=1; i<${#containers[@]}; i++)); do
+            printf " and %s" "${containers[$i]}"
+        done
+        echo
+    fi
+}

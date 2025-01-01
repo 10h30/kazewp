@@ -36,7 +36,7 @@ create_env_file() {
 
     ## Wordpress ##
     WORDPRESS_DB_USER=wordpress
-    WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
+    WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
     WORDPRESS_DB_NAME=wordpress
     WORDPRESS_DB_HOST=db_${DOMAIN}:3306
 

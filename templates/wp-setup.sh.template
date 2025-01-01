@@ -4,10 +4,8 @@ wpcli() {
     docker compose run --rm wpcli "$@"
 }
 
-echo "Waiting for MySQL to be ready..."
-#while ! docker exec db_${DOMAIN} mysqladmin ping -h localhost --silent; do
-#    sleep 1
-#done
+echo "Waiting for MariaDB to be ready..."
+
 while [ "$(docker inspect --format='{{.State.Health.Status}}' db_${DOMAIN})" != "healthy" ]; do
     echo "MariaDB is not healthy yet. Retrying..."
     sleep 5
