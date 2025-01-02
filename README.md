@@ -2,6 +2,9 @@
 
 **KazeWP** is an open-source tool designed to simplify the deployment and management of multiple WordPress sites behind a lightweight reverse proxy. It uses Docker and Bash scripts to automate configuration, allowing you to quickly set up and scale your WordPress instances with minimal effort.
 
+![KazeWP](images/kazewp.png)
+
+
 ---
 
 ## **Features**
