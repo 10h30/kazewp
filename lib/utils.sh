@@ -5,6 +5,10 @@ function generate_password() {
 }
 export -f generate_password
 
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 function save_credentials() {
     local WP_PROJECT_DIR=$1
     local DOMAIN=$2

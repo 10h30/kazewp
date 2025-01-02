@@ -12,6 +12,24 @@ source "${SCRIPT_DIR}/lib/docker.sh"
 source "${SCRIPT_DIR}/lib/caddy.sh"
 source "${SCRIPT_DIR}/lib/wordpress.sh"
 
+
+# Check if Docker is installed
+if ! command_exists docker; then
+    install_docker
+    
+    # Verify installation
+    if ! command_exists docker; then
+        echo "Docker installation failed. Please install Docker manually."
+        exit 1
+    fi
+fi
+
+# Check if Docker service is running
+if ! systemctl is-active --quiet docker; then
+    echo "Docker service is not running. Starting Docker..."
+    sudo systemctl start docker
+fi
+
 # Function to install a new WordPress site
 install_site() {
 
@@ -243,11 +261,11 @@ case "$1" in
         ;;
 
     *)
-        echo "KazeW - PWordPress Site Management Script"
+        echo "KazeWP - WordPress Site Management Script"
         echo "Usage:"
         echo "  $0 install <domain>              - Install a new WordPress site"
         echo "  $0 list                          - List all installed WordPress sites"
-        echo "  $0 delete <domain>            - Delete a WordPress site"
+        echo "  $0 delete <domain>               - Delete a WordPress site"
         echo "  $0 delete all                    - Delete everything"
         exit 1
         ;;

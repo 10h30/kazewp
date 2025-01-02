@@ -1,5 +1,29 @@
 #!/bin/bash
 
+# Function to install Docker
+install_docker() {
+    echo -n "Docker is not installed. Do you want to install Docker? (y/n): "
+    read answer
+    
+    if [ "$answer" != "${answer#[Yy]}" ]; then
+        echo "Installing Docker..."
+        curl -fsSL https://get.docker.com -o get-docker.sh  > /dev/null 2>&1
+        sudo sh get-docker.sh  > /dev/null 2>&1
+        rm get-docker.sh  > /dev/null 2>&1
+        
+        # Add current user to docker group
+        sudo usermod -aG docker $USER
+
+        #newgrp docker
+
+        echo "Docker has been installed successfully!"
+    else
+        echo "Docker installation skipped. Please install Docker manually to use this script."
+        exit 1
+    fi
+}
+
+
 check_container_running() {
     docker ps --format '{{.Names}}' | grep -q "^$1$"
     return $?
