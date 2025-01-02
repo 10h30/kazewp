@@ -1,7 +1,6 @@
 ${DOMAIN} {
-    #reverse_proxy wordpress_${DOMAIN}:80
-
-    tls internal
+    
+    #tls internal
     root * /var/www/${DOMAIN}/html
 	encode zstd gzip
 
@@ -18,5 +17,6 @@ ${DOMAIN} {
 		X-Frame-Options "SAMEORIGIN"
 		X-Content-Type-Options "nosniff"
 	}
+	import wordpress
 }
 

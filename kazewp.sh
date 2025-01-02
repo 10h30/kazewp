@@ -41,47 +41,45 @@ install_site() {
     setup_directories
 
     DOMAIN="$1"
-    #db_prefix="$(openssl rand -base64 6)"_
-
-
-while true; do
-    read -p "Enter admin email: " ADMIN_EMAIL
-    if validate_email "$ADMIN_EMAIL"; then
-        break
+    
+    WP_PROJECT_DIR="${WORDPRESS_DIR}/${DOMAIN}"
+    if [ -d "$WP_PROJECT_DIR" ]; then
+        echo -e "${RED}Directory ${WP_PROJECT_DIR} already exists!${NC}"
+        exit 1
     fi
-done
-
-read -p "Enter admin username: " ADMIN_USER
-
-read -s -p "Enter password (press Enter for random password): " ADMIN_PASSWORD
-echo
-
-if [ -z "$ADMIN_PASSWORD" ]; then
-    ADMIN_PASSWORD=$(generate_password)
-    echo "Generated password: $ADMIN_PASSWORD"
-fi
-
-read -p "Enter site title: " SITE_TITLE
-
-MYSQL_ROOT_PASSWORD=$(openssl rand -base64 32)
-MYSQL_PASSWORD=$(openssl rand -base64 32)
-
-WP_PROJECT_DIR="${WORDPRESS_DIR}/${DOMAIN}"
-if [ -d "$WP_PROJECT_DIR" ]; then
-    echo -e "${RED}Directory ${WP_PROJECT_DIR} already exists!${NC}"
-    exit 1
-fi
-
-mkdir -p "$WP_PROJECT_DIR"
-cd "$WP_PROJECT_DIR"
-
-create_docker_compose "$DOMAIN" "$MYSQL_ROOT_PASSWORD" "$MYSQL_PASSWORD"
-create_caddy_config "$DOMAIN"
-create_wp_setup "$DOMAIN" "$ADMIN_USER" "$ADMIN_PASSWORD" "$ADMIN_EMAIL" "$SITE_TITLE"
-create_env_file "$DOMAIN" "$ADMIN_USER" "$ADMIN_PASSWORD" "$ADMIN_EMAIL" "$MYSQL_ROOT_PASSWORD" "$MYSQL_PASSWORD"
 
 
 
+    while true; do
+        read -p "Enter admin email: " ADMIN_EMAIL
+        if validate_email "$ADMIN_EMAIL"; then
+            break
+        fi
+    done
+
+    read -p "Enter admin username: " ADMIN_USER
+
+    read -s -p "Enter password (press Enter for random password): " ADMIN_PASSWORD
+    echo
+
+    if [ -z "$ADMIN_PASSWORD" ]; then
+        ADMIN_PASSWORD=$(generate_password)
+        echo "Generated password: $ADMIN_PASSWORD"
+    fi
+
+    read -p "Enter site title: " SITE_TITLE
+
+    MYSQL_ROOT_PASSWORD=$(openssl rand -base64 32)
+    MYSQL_PASSWORD=$(openssl rand -base64 32)
+
+    mkdir -p "$WP_PROJECT_DIR"
+    cd "$WP_PROJECT_DIR"
+    
+
+    create_docker_compose "$DOMAIN" "$MYSQL_ROOT_PASSWORD" "$MYSQL_PASSWORD"
+    create_caddy_config "$DOMAIN"
+    create_wp_setup "$DOMAIN" "$ADMIN_USER" "$ADMIN_PASSWORD" "$ADMIN_EMAIL" "$SITE_TITLE"
+    create_env_file "$DOMAIN" "$ADMIN_USER" "$ADMIN_PASSWORD" "$ADMIN_EMAIL" "$MYSQL_ROOT_PASSWORD" "$MYSQL_PASSWORD"
 
 
     while true; do

@@ -33,6 +33,38 @@ create_caddy_docker_compose() {
     admin off
     persist_config off
 }
+(wordpress) {
+
+	# Some static files Cache-Control.
+	@static {
+		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.json
+	}
+	header @static Cache-Control max-age=2592000
+
+	# Security
+        @forbidden {
+                not path /wp-includes/ms-files.php
+                path /wp-admin/includes/*.php
+                path /wp-includes/*.php
+                path /wp-config.php
+                path /wp-content/uploads/*.php
+                path /.user.ini
+                path /wp-content/debug.log
+        }
+        respond @forbidden "Access denied" 403
+
+	# Cache Enabler
+	@cache_enabler {
+		not header_regexp Cookie "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_logged_in"
+		not path_regexp "(/wp-admin/|/xmlrpc.php|/wp-(app|cron|login|register|mail).php|wp-.*.php|/feed/|index.php|wp-comments-popup.php|wp-links-opml.php|wp-locations.php|sitemap(index)?.xml|[a-z0-9-]+-sitemap([0-9]+)?.xml)"
+		not method POST
+		not expression {query} != ''
+	}
+
+	route @cache_enabler {
+		try_files /wp-content/cache/cache-enabler/{host}{uri}/https-index.html /wp-content/cache/cache-enabler/{host}{uri}/index.html {path} {path}/index.php?{query}
+	}
+}
 
 # Site configurations will be imported below
 import sites/*.caddy
