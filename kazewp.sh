@@ -1,5 +1,9 @@
 #!/bin/bash
 
+LOG_FILE="kazewp.log"
+exec > >(tee -a "$LOG_FILE") 2>&1
+echo -e "\n========== $(date '+%Y-%m-%d %H:%M:%S') =========="
+
 # Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
