@@ -53,9 +53,25 @@ Ensure you have the following installed:
 
 ## **How It Works**
 
-- **Reverse Proxy**: KazeWP uses Caddy as a reverse proxy, automatically handling SSL certificates and routing traffic to the appropriate WordPress container.
-- **WordPress Isolation**: Each WordPress site runs in its own Docker container with a unique configuration.
-- **Shared Database**: MariaDB serves as the database for all WordPress sites, with each site using a unique database user and password.
+KazeWP simplifies the deployment and management of multiple WordPress websites by using Docker containers and Caddy as a reverse proxy. Here’s a breakdown of the key components and how they work together:
+
+### **Caddy (Reverse Proxy)**
+Caddy acts as the reverse proxy, automatically handling SSL certificate generation and secure HTTPS connections for all WordPress sites. It efficiently routes incoming traffic to the correct site based on the domain name, ensuring seamless and secure access.
+
+### **WordPress (Site Containers)**
+Each WordPress site runs in its own dedicated Docker container. This isolation ensures that each site has its own environment, minimizing the risk of conflicts between sites and making it easy to manage and update individual sites.
+
+### **Dedicated Database (MariaDB)**
+Unlike traditional setups where multiple sites share a single database, KazeWP creates a **dedicated MariaDB database** for each WordPress site. This offers several advantages:
+
+- **Improved Isolation**: Each site operates independently with its own database, reducing the risk of cross-site issues.
+- **Easier Migration**: Since each site has a self-contained database, migrating sites to a new host is straightforward and doesn’t require any reconfiguration of the shared database.
+- **Better Performance**: By isolating the databases, you can better manage the performance and resources for each individual site.
+
+### **Bash Script Automation**
+KazeWP leverages Bash scripts to automate key tasks such as site creation, listing existing sites, and deleting sites. The automation ensures that you can manage your WordPress instances with minimal manual effort and reduced chances of human error.
+
+By combining these components, KazeWP offers a fast, efficient, and scalable solution for managing multiple WordPress websites with minimal configuration.
 
 ---
 
