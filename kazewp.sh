@@ -237,6 +237,9 @@ case "$1" in
                 echo "Removing Caddy files..."
                 rm -rf caddy
 
+                # Remove log files
+                rm -rf kazewp.log
+
                 docker system prune -af 
 
                 echo "Uninstallation complete."
