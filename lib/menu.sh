@@ -11,32 +11,17 @@ show_interactive_menu() {
     print_info "  $0 install <domain>              - Install a new WordPress site"
     print_info "  $0 stop <domain>                 - Stop running WordPress sites"
     print_info "  $0 start <domain>                - Start an installed WordPress sites"
+    print_info "  $0 restart <domain>              - Restart an installed WordPress sites"
+    print_info "  $0 restart all                   - Restart all WordPress sites and Caddy"
     print_info "  $0 delete <domain>               - Delete a WordPress site"
     print_info "  $0 delete all                    - Delete everything"
     
 
     # Get and display existing sites
     local -a sites=()
-    local i=1
     
-    print_subheader "Installed WordPress Sites"
-
-     # First check if any sites exist
-    if [ ! -d "$WORDPRESS_DIR" ] || [ -z "$(ls -A "$WORDPRESS_DIR" 2>/dev/null)" ]; then
-        print_warning "No WordPress sites installed yet."
-        #show_action_menu "brand-new"
-        #return
-    else
-        while IFS= read -r site; do
-            if [ -f "$site/compose.yaml" ]; then
-                sites+=("$(basename "$site")")
-                domain=$(basename "$site")
-                status=$(get_site_status "$site/compose.yaml")
-                print_menu_item "$i" "$domain" "$status"
-                ((i++))
-            fi
-        done < <(find "$WORDPRESS_DIR" -mindepth 1 -maxdepth 1 -type d | sort)
-    fi
+    list_sites
+    
 
     print_subheader "Available Actions"
     echo -e "${BWHITE}Select an option:${NC}"
@@ -294,16 +279,25 @@ list_sites_sss() {
 }
 
 list_sites() {
+    local i=1
     print_subheader "Installed WordPress Sites"
-    while IFS= read -r site; do
-        if [ -f "$site/compose.yaml" ]; then
-            sites+=("$(basename "$site")")
-            domain=$(basename "$site")
-            status=$(get_site_status "$site/compose.yaml")
-            print_menu_item "$i" "$domain" "$status"
-            ((i++))
-        fi
-    done < <(find "$WORDPRESS_DIR" -mindepth 1 -maxdepth 1 -type d | sort)
+
+     # First check if any sites exist
+    if [ ! -d "$WORDPRESS_DIR" ] || [ -z "$(ls -A "$WORDPRESS_DIR" 2>/dev/null)" ]; then
+        print_warning "No WordPress sites installed yet."
+        #show_action_menu "brand-new"
+        #return
+    else
+        while IFS= read -r site; do
+            if [ -f "$site/compose.yaml" ]; then
+                sites+=("$(basename "$site")")
+                domain=$(basename "$site")
+                status=$(get_site_status "$site/compose.yaml")
+                print_menu_item "$i" "$domain" "$status"
+                ((i++))
+            fi
+        done < <(find "$WORDPRESS_DIR" -mindepth 1 -maxdepth 1 -type d | sort)
+    fi
 
 }
 
@@ -646,8 +640,46 @@ show_site_details() {
 }
 
 
+
+# Function to restart WordPress sites
 restart_sites() {
-    local domain=$1
-    echo -e "${YELLOW}Restarting site: ${domain}${NC}"
-    docker compose -f "${WORDPRESS_DIR}/${domain}/compose.yaml" restart
+    local target="$1"
+    
+    if [ ! -d "$WORDPRESS_DIR" ]; then
+        echo "No WordPress installations found!"
+        exit 1
+    fi
+
+    case "$target" in
+        "all")
+            print_subheader "Restarting all containers..."
+            # Restart Caddy first
+            if [ -f "${CADDY_DIR}/compose.yaml" ]; then
+                print_info "Restarting Caddy reverse proxy..."
+                docker compose -f "${CADDY_DIR}/compose.yaml" restart
+            fi
+            
+            # Restart all WordPress installations
+            for site in "$WORDPRESS_DIR"/*; do
+                if [ -d "$site" ] && [ -f "$site/compose.yaml" ]; then
+                    domain=$(basename "$site")
+                    echo "Starting site: $domain"
+                    docker compose -f "$site/compose.yaml" restart
+                fi
+            done
+            echo "All containers have been started."
+            ;;
+            
+        *)
+            # Restart specific site
+            WP_PROJECT_DIR="${WORDPRESS_DIR}/${target}"
+            if [ ! -d "$WP_PROJECT_DIR" ] || [ ! -f "$WP_PROJECT_DIR/compose.yaml" ]; then
+                echo "Error: Site '$target' not found"
+                exit 1
+            fi
+            echo "Starting site: $target"
+            docker compose -f "$WP_PROJECT_DIR/compose.yaml" restart
+            echo "Site containers have been started."
+            ;;
+    esac
 }

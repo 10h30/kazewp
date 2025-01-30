@@ -51,7 +51,6 @@ case "$1" in
         list_sites
         ;;
     "delete")
-        
         if [ -z "$2" ]; then
             show_action_menu "delete"
         else
@@ -73,7 +72,13 @@ case "$1" in
             start_sites "$2"
         fi
         ;;
-
+    "restart")
+        if [ -z "$2" ]; then
+            show_action_menu "restart"
+        else
+            restart_sites "$2"
+        fi
+        ;;
     *)
         show_interactive_menu
         ;;
