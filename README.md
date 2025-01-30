@@ -79,6 +79,22 @@ KazeWP leverages Bash scripts to automate key tasks such as site creation, listi
 By combining these components, KazeWP offers a fast, efficient, and scalable solution for managing multiple WordPress websites with minimal configuration.
 
 ---
+## **Default Plugins and Theme**
+Each WordPress installation comes pre-configured with carefully selected plugins and theme to enhance your site's functionality right from the start:
+
+### Pre-installed Plugins
+- **Wordfence Security**: Premium WordPress firewall and security scanner
+- **Rank Math SEO**: Advanced SEO plugin for optimizing your content and improving search engine visibility
+- **Fluent SMTP**: Reliable email delivery solution for WordPress
+- **SEO Framework**: Lightweight, fast, and automated SEO solution
+- **Cache Enabler**: Efficient caching plugin for improved performance
+
+### Default Theme
+- **Kadence**: Modern, lightweight, and customizable WordPress theme optimized for performance and flexibility
+
+These default installations ensure that your WordPress sites are ready for production use with essential SEO, performance, and email functionality out of the box.
+
+---
 
 ## **License**
 
