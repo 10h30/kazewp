@@ -12,7 +12,7 @@ source "${SCRIPT_DIR}/lib/docker.sh"
 source "${SCRIPT_DIR}/lib/caddy.sh"
 source "${SCRIPT_DIR}/lib/wordpress.sh"
 source "${SCRIPT_DIR}/lib/menu.sh"
-source "${SCRIPT_DIR}/lib/log.sh"
+#source "${SCRIPT_DIR}/lib/log.sh"
 
 
 # Check if Docker is installed

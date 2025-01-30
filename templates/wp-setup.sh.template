@@ -20,7 +20,7 @@ if ! wpcli core is-installed ; then
         --admin_password="${ADMIN_PASSWORD}" \
         --admin_email="${ADMIN_EMAIL}" \
         --skip-email
-
+    wpcli rewrite structure '/%postname%/'
     echo "Installing and activating plugins..."
     wpcli plugin install wordfence cache-enabler --activate
     wpcli option update cache_enabler '{
@@ -50,19 +50,19 @@ if ! wpcli core is-installed ; then
     wpcli theme update --all
 
     # List users
-    echo "== User List =="
-    wpcli user list
-    echo ""
+    #echo "== User List =="
+    #wpcli user list
+    #echo ""
 
     # Show installed plugin
-    echo "== Theme List =="
-    wpcli theme list
-    echo ""
+    #echo "== Theme List =="
+    #wpcli theme list
+    #echo ""
 
     # Show installed plugin
-    echo "== Plugin List =="
-    wpcli plugin list
-    echo ""
+    #echo "== Plugin List =="
+    #wpcli plugin list
+    #echo ""
 
     echo "WordPress setup completed!"
 else
