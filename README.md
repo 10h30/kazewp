@@ -5,6 +5,24 @@
 ![KazeWP](images/kazewp.png)
 
 
+## **Table of Contents**
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [How It Works](#how-it-works)
+  - [Caddy (Reverse Proxy)](#caddy-reverse-proxy)
+  - [WordPress (Site Containers)](#wordpress-site-containers)
+  - [Dedicated Database (MariaDB)](#dedicated-database-mariadb)
+  - [Bash Script Automation](#bash-script-automation)
+- [Default Plugins and Theme](#default-plugins-and-theme)
+  - [Pre-installed Plugins](#pre-installed-plugins)
+  - [Default Theme](#default-theme)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+
 ---
 
 ## **Features**
