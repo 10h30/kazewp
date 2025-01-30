@@ -37,7 +37,7 @@ Ensure you have the following installed:
 
 2. **Run the install script**:
     ```bash
-    ./kazewp.sh install domain.com
+    ./kazewp.sh
     ```
 
 ---
@@ -45,13 +45,14 @@ Ensure you have the following installed:
 ## **Usage**
 
    ```
-
-   ./kazewp.sh list                          - List all installed WordPress sites"
-   ./kazewp.sh install <domain>              - Install a new WordPress site"
-   ./kazewp.sh stop <domain>                 - Stop running WordPress sites"
-   ./kazewp.sh start <domain>                - Start an installed WordPress sites"
-   ./kazewp.sh delete <domain>               - Delete a WordPress site"
-   ./kazewp.sh delete all                    - Delete everything"
+   ./kazewp.sh                               - Interactive Menu
+   ./kazewp.sh list                          - List all installed WordPress sites
+   ./kazewp.sh install <domain>              - Install a new WordPress site
+   ./kazewp.sh stop <domain>                 - Stop a running WordPress sites
+   ./kazewp.sh start <domain>                - Start an installed WordPress sites
+   ./kazewp.sh restart <domain>              - Restart an installed WordPress sites
+   ./kazewp.sh delete <domain>               - Delete a WordPress site
+   ./kazewp.sh delete all                    - Delete everything
    
    ```
 
