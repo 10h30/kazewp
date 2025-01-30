@@ -45,10 +45,14 @@ Ensure you have the following installed:
 ## **Usage**
 
    ```bash
-   ./kazewp.sh install <domain>        - Install a new WordPress site
-   ./kazewp.sh list                    - List all installed WordPress sites
-   ./kazewp.sh delete <domain>         - Delete a WordPress site
-   ./kazewp.sh delete all              - Delete everything
+   
+   ./kazewp.sh list                          - List all installed WordPress sites"
+   ./kazewp.sh install <domain>              - Install a new WordPress site"
+   ./kazewp.sh stop <domain>                 - Stop running WordPress sites"
+   ./kazewp.sh start <domain>                - Start an installed WordPress sites"
+   ./kazewp.sh delete <domain>               - Delete a WordPress site"
+   ./kazewp.sh delete all                    - Delete everything"
+   
    ```
 
 ## **How It Works**
