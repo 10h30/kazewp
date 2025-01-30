@@ -106,6 +106,7 @@ Each WordPress installation comes pre-configured with carefully selected plugins
 - **Fluent SMTP**: Reliable email delivery solution for WordPress
 - **SEO Framework**: Lightweight, fast, and automated SEO solution
 - **Cache Enabler**: Efficient caching plugin for improved performance
+- **Kadence Blocks**: Advanced content blocks for the WordPress block editor, perfectly integrated with Kadence theme
 
 ### Default Theme
 - **Kadence**: Modern, lightweight, and customizable WordPress theme optimized for performance and flexibility
