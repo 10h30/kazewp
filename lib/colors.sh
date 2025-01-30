@@ -43,6 +43,7 @@ BG_PURPLE='\033[45m'
 BG_CYAN='\033[46m'
 BG_WHITE='\033[47m'
 
+
 # Styling Helper Functions
 print_header() {
     local text="$1"

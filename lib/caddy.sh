@@ -102,7 +102,7 @@ setup_directories() {
     mkdir -p "${CADDY_DIR}/caddy_config"
 
     if [ ! -f "${CADDY_DIR}/Caddyfile" ]; then
-        echo "Creating initial Caddy configuration..."
+        #echo "Creating initial Caddy configuration..."
         create_caddy_docker_compose
     fi
 }

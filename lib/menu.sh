@@ -14,32 +14,36 @@ show_interactive_menu() {
     print_info "  $0 delete <domain>               - Delete a WordPress site"
     print_info "  $0 delete all                    - Delete everything"
     
-    # First check if any sites exist
-    if [ ! -d "$WORDPRESS_DIR" ] || [ -z "$(ls -A "$WORDPRESS_DIR" 2>/dev/null)" ]; then
-        print_warning "No WordPress sites installed yet."
-        show_action_menu "brand-new"
-        return
-    fi
 
     # Get and display existing sites
     local -a sites=()
     local i=1
     
     print_subheader "Installed WordPress Sites"
-    while IFS= read -r site; do
-        if [ -f "$site/compose.yaml" ]; then
-            sites+=("$(basename "$site")")
-            domain=$(basename "$site")
-            status=$(get_site_status "$site/compose.yaml")
-            print_menu_item "$i" "$domain" "$status"
-            ((i++))
-        fi
-    done < <(find "$WORDPRESS_DIR" -mindepth 1 -maxdepth 1 -type d | sort)
+
+     # First check if any sites exist
+    if [ ! -d "$WORDPRESS_DIR" ] || [ -z "$(ls -A "$WORDPRESS_DIR" 2>/dev/null)" ]; then
+        print_warning "No WordPress sites installed yet."
+        #show_action_menu "brand-new"
+        #return
+    else
+        while IFS= read -r site; do
+            if [ -f "$site/compose.yaml" ]; then
+                sites+=("$(basename "$site")")
+                domain=$(basename "$site")
+                status=$(get_site_status "$site/compose.yaml")
+                print_menu_item "$i" "$domain" "$status"
+                ((i++))
+            fi
+        done < <(find "$WORDPRESS_DIR" -mindepth 1 -maxdepth 1 -type d | sort)
+    fi
 
     print_subheader "Available Actions"
     echo -e "${BWHITE}Select an option:${NC}"
     print_menu_action "n" "Install new WordPress site"
-    print_menu_action "m" "Manage multiple sites"
+    if [ -d "$WORDPRESS_DIR" ] && [ -n "$(find "$WORDPRESS_DIR" -mindepth 1 -type d 2>/dev/null)" ]; then
+        print_menu_action "m" "Manage multiple sites"
+    fi
     print_menu_action "q" "Quit"
     print_separator
 

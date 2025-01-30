@@ -44,8 +44,8 @@ Ensure you have the following installed:
 
 ## **Usage**
 
-   ```bash
-   
+   ```
+
    ./kazewp.sh list                          - List all installed WordPress sites"
    ./kazewp.sh install <domain>              - Install a new WordPress site"
    ./kazewp.sh stop <domain>                 - Stop running WordPress sites"
