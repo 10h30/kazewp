@@ -2,26 +2,68 @@
 
 # Function to install Docker
 install_docker() {
+    # Detect OS
+    OS=""
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        OS=$ID
+    fi
+
+    # Function to install curl if missing
+    install_curl() {
+        if ! command -v curl &> /dev/null; then
+            echo "curl is not installed. Installing curl..."
+            case "$OS" in
+                ubuntu|debian)
+                    sudo apt update && sudo apt install -y curl
+                    ;;
+                centos|rhel|rocky|alma)
+                    sudo yum install -y curl
+                    ;;
+                fedora)
+                    sudo dnf install -y curl
+                    ;;
+                arch)
+                    sudo pacman -Sy --noconfirm curl
+                    ;;
+                *)
+                    echo "Unsupported OS: $OS. Please install curl manually."
+                    exit 1
+                    ;;
+            esac
+        fi
+    }
+
+    # Install curl if missing
+    install_curl
+
+    # Check if Docker is already installed
+    if command -v docker &> /dev/null; then
+        echo "Docker is already installed."
+        return
+    fi
+
+    # Prompt user to install Docker
     echo -n "Docker is not installed. Do you want to install Docker? (y/n): "
     read answer
-    
-    if [ "$answer" != "${answer#[Yy]}" ]; then
+
+    if [[ "$answer" =~ ^[Yy]$ ]]; then
         echo "Installing Docker..."
-        curl -fsSL https://get.docker.com -o get-docker.sh  > /dev/null 2>&1
-        sudo sh get-docker.sh  > /dev/null 2>&1
-        rm get-docker.sh  > /dev/null 2>&1
-        
-        # Add current user to docker group
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sudo sh get-docker.sh
+        rm get-docker.sh
+
+        # Add the current user to the docker group
         sudo usermod -aG docker $USER
 
-        #newgrp docker
-
         echo "Docker has been installed successfully!"
+        echo "You may need to log out and back in for group changes to take effect."
     else
         echo "Docker installation skipped. Please install Docker manually to use this script."
         exit 1
     fi
 }
+
 
 
 check_container_running() {
