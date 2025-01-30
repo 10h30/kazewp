@@ -15,3 +15,11 @@ validate_email() {
     fi
     return 0
 }
+
+validate_username() {
+    if [[ -z "$1" ]] || [[ "$1" =~ ^[[:space:]]*$ ]]; then
+        echo -e "${RED}Username cannot be empty${NC}"
+        return 1
+    fi
+    return 0
+}

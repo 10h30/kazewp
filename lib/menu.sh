@@ -176,7 +176,12 @@ install_site() {
         fi
     done
 
+    while true; do
     read -p "Enter admin username: " ADMIN_USER
+        if validate_username "$ADMIN_USER"; then
+            break
+        fi
+    done
 
     read -s -p "Enter password (press Enter for random password): " ADMIN_PASSWORD
     echo
