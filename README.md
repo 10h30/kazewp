@@ -104,8 +104,8 @@ Each WordPress installation comes pre-configured with carefully selected plugins
 - **Wordfence Security**: Premium WordPress firewall and security scanner
 - **Rank Math SEO**: Advanced SEO plugin for optimizing your content and improving search engine visibility
 - **Fluent SMTP**: Reliable email delivery solution for WordPress
-- **SEO Framework**: Lightweight, fast, and automated SEO solution
 - **Cache Enabler**: Efficient caching plugin for improved performance
+- **Query Monitor**: Debugging and performance analysis tool for WordPress
 - **Kadence Blocks**: Advanced content blocks for the WordPress block editor, perfectly integrated with Kadence theme
 
 ### Default Theme

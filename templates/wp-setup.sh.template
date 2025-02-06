@@ -23,7 +23,7 @@ if ! wpcli core is-installed ; then
         --skip-email
     wpcli rewrite structure '/%postname%/'
     echo "Installing and activating plugins..."
-    wpcli plugin install wordfence cache-enabler autodescription fluent-smtp kadence-blocks --activate
+    wpcli plugin install wordfence cache-enabler seo-by-rank-math fluent-smtp kadence-blocks query-monitor --activate
     wpcli option update cache_enabler '{
                 "version": "1.8.15",
                 "use_trailing_slashes": 1,
