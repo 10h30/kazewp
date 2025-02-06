@@ -106,6 +106,8 @@ Each WordPress installation comes pre-configured with carefully selected plugins
 - **Fluent SMTP**: Reliable email delivery solution for WordPress
 - **Cache Enabler**: Efficient caching plugin for improved performance
 - **Query Monitor**: Debugging and performance analysis tool for WordPress
+- **Code Snippets**: Safely add custom code snippets to your site without editing theme files
+- **UpdraftPlus**: Backup and restore plugin for WordPress, ensuring your data is always secure
 - **Kadence Blocks**: Advanced content blocks for the WordPress block editor, perfectly integrated with Kadence theme
 
 ### Default Theme
