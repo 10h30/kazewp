@@ -77,7 +77,7 @@ create_docker_compose() {
     # Define phpMyAdmin service block
     PHPMYADMIN_BLOCK=$(
         cat <<-EOL
-  phpmyadmin_${DOMAIN}:
+  phpmyadmin:
     container_name: phpmyadmin_${DOMAIN}
     depends_on:
       - db_${DOMAIN}
