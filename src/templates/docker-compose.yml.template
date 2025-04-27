@@ -44,6 +44,8 @@ services:
       - ${DOMAIN}_net
       - caddy_net
 
+$PHPMYADMIN_BLOCK
+
 networks:
   ${DOMAIN}_net:
     driver: bridge

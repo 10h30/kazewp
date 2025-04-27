@@ -1,19 +1,18 @@
 #!/bin/bash
 
 # Get the directory where the script is located
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/src"
 
 # Source library files in specific order
-source "${SCRIPT_DIR}/lib/colors.sh"
 source "${SCRIPT_DIR}/lib/config.sh"
 source "${SCRIPT_DIR}/lib/utils.sh"
+source "${SCRIPT_DIR}/lib/colors.sh"
 source "${SCRIPT_DIR}/lib/validation.sh"
 source "${SCRIPT_DIR}/lib/docker.sh"
 source "${SCRIPT_DIR}/lib/caddy.sh"
 source "${SCRIPT_DIR}/lib/wordpress.sh"
 source "${SCRIPT_DIR}/lib/menu.sh"
-#source "${SCRIPT_DIR}/lib/log.sh"
-
 
 # Check if Docker is installed
 if ! command_exists docker; then
@@ -27,9 +26,18 @@ if ! command_exists docker; then
 fi
 
 # Check if Docker service is running
-if ! systemctl is-active --quiet docker; then
+if [ "$(uname)" == "Darwin" ]; then
+  # macOS
+  if ! docker info > /dev/null 2>&1; then
+    echo "Docker service is not running. Starting Docker..."
+    open -a Docker
+  fi
+else
+  # Linux
+  if ! systemctl is-active --quiet docker; then
     echo "Docker service is not running. Starting Docker..."
     sudo systemctl start docker
+  fi
 fi
 
 # Main script
