@@ -1,27 +1,31 @@
 # **KazeWP**
 
+
 **KazeWP** is an open-source tool designed to simplify the deployment and management of multiple WordPress sites behind a lightweight reverse proxy. It uses Docker and Bash scripts to automate configuration, allowing you to quickly set up and scale your WordPress instances with minimal effort.
 
-![KazeWP](images/kazewp.png)
+![KazeWP](src/images/kazewp.png)
 
 
 ## **Table of Contents**
 
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [How It Works](#how-it-works)
-  - [Caddy (Reverse Proxy)](#caddy-reverse-proxy)
-  - [WordPress (Site Containers)](#wordpress-site-containers)
-  - [Dedicated Database (MariaDB)](#dedicated-database-mariadb)
-  - [Bash Script Automation](#bash-script-automation)
-- [Default Plugins and Theme](#default-plugins-and-theme)
-  - [Pre-installed Plugins](#pre-installed-plugins)
-  - [Default Theme](#default-theme)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
+- [**KazeWP**](#kazewp)
+  - [**Table of Contents**](#table-of-contents)
+  - [**Features**](#features)
+  - [**Getting Started**](#getting-started)
+    - [**Prerequisites**](#prerequisites)
+    - [**Installation**](#installation)
+  - [**Usage**](#usage)
+  - [**How It Works**](#how-it-works)
+    - [**Caddy (Reverse Proxy)**](#caddy-reverse-proxy)
+    - [**WordPress (Site Containers)**](#wordpress-site-containers)
+    - [**Dedicated Database (MariaDB)**](#dedicated-database-mariadb)
+    - [**Bash Script Automation**](#bash-script-automation)
+  - [**Default Plugins and Theme**](#default-plugins-and-theme)
+    - [Pre-installed Plugins](#pre-installed-plugins)
+    - [Default Theme](#default-theme)
+  - [**phpMyAdmin**](#phpmyadmin)
+  - [**License**](#license)
+  - [**Acknowledgements**](#acknowledgements)
 
 ---
 
@@ -117,6 +121,24 @@ These default installations ensure that your WordPress sites are ready for produ
 
 ---
 
+## **phpMyAdmin**
+
+To use phpMyAdmin with your WordPress sites, follow these steps:
+
+1. **Choose to Include phpMyAdmin During Site Creation**:
+   When you are running the installation script to create a new WordPress site, you'll be prompted to include phpMyAdmin. Make sure to opt for PhpMyAdmin during this setup.
+
+2. **Access phpMyAdmin**:
+    To access phpMyAdmin, navigate to <http://your-domain.com/pma> (replace "your-domain.com" with your actual domain name).
+
+3.  **Stop phpMyAdmin**:
+    To prevent unauthorized access to phpMyAdmin after use, make sure to stop the container. Navigate to your WordPress project directory and execute the following command:
+    ```bash
+    docker compose stop phpmyadmin
+    ```
+
+---
+
 ## **License**
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -129,6 +151,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [WordPress](https://wordpress.org/)
 - [Docker](https://www.docker.com/)
 - [MariaDB](https://mariadb.org/)
+- [phpMyAdmin](https://www.phpmyadmin.net/)
 
 ---
 
