@@ -11,6 +11,27 @@ create_caddy_config() {
 
     mkdir -p "${CADDY_DIR}/sites"
 
+
+    # Define phpMyAdmin service block
+    PHPMYADMIN_CADDY_BLOCK=$(
+        cat <<-EOL
+    # Redirect /pma to /pma/
+    redir /pma /pma/ 301
+    # Route requests for /pma (and subpaths) to the phpMyAdmin container
+    handle_path /pma* {
+        reverse_proxy phpmyadmin_${DOMAIN}
+    }
+EOL
+    )
+
+
+
+    if [[ "$USE_PHPMYADMIN" == "y" ]]; then
+        export PHPMYADMIN_CADDY_BLOCK="$PHPMYADMIN_CADDY_BLOCK"
+    else
+        export PHPMYADMIN_CADDY_BLOCK=""
+    fi
+
     envsubst < "${SCRIPT_DIR}/templates/caddy.template" > "$CONFIG_FILE"
 
     if ! grep -q "import sites/\*.caddy" "${CADDY_DIR}/Caddyfile"; then

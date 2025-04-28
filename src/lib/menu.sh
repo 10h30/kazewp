@@ -207,7 +207,8 @@ install_site() {
     cd "$WP_PROJECT_DIR"
 
     # Ask if the user wants to include phpMyAdmin in the setup
-    read -p "Do you want to include phpMyAdmin? (y/n): " USE_PHPMYADMIN
+    read -p "Do you want to include phpMyAdmin? (Y/n) [N]: " USE_PHPMYADMIN
+    USE_PHPMYADMIN=${USE_PHPMYADMIN:-n}
     USE_PHPMYADMIN=$(echo "$USE_PHPMYADMIN" | tr '[:upper:]' '[:lower:]')
 
     # Create necessary configuration files for Docker Compose, Caddy, and WordPress

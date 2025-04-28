@@ -77,7 +77,7 @@ create_docker_compose() {
     # Define phpMyAdmin service block
     PHPMYADMIN_BLOCK=$(
         cat <<-EOL
-  phpmyadmin:
+  phpmyadmin_${DOMAIN}:
     container_name: phpmyadmin_${DOMAIN}
     depends_on:
       - db_${DOMAIN}
@@ -85,13 +85,11 @@ create_docker_compose() {
     environment:
       - PMA_HOST=db_${DOMAIN}
       - MYSQL_ROOT_PASSWORD=\${MYSQL_ROOT_PASSWORD}
+      - PMA_ABSOLUTE_URI=https://${DOMAIN}/pma/
     restart: always
-    ports:
-      - "8080:80"
     networks:
       - ${DOMAIN}_net
-    profiles:
-      - phpmyadmin
+      - caddy_net
 EOL
     )
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 validate_domain() {
-    if [[ ! $1 =~ ^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$ ]]; then
+    if [[ ! $1 =~ ^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$ ]]; then
         echo -e "${RED}Invalid domain format${NC}"
         return 1
     fi
