@@ -128,23 +128,14 @@ To use phpMyAdmin with your WordPress sites, follow these steps:
 1. **Choose to Include phpMyAdmin During Site Creation**:
    When you are running the installation script to create a new WordPress site, you'll be prompted to include phpMyAdmin. Make sure to opt for PhpMyAdmin during this setup.
 
-2. **Manually Run phpMyAdmin**:
-   After the site is set up, you can manually start PhpMyAdmin using Docker Compose. Navigate to your WordPress project directory and execute the following command:
-   ```bash
-   docker compose up phpmyadmin -d
-   ```
-3. **Access phpMyAdmin via IP Address**:
-   Once phpMyAdmin is running, you can access it by opening a web browser and navigating to `http://<your-server-ip>:8080`. Replace `<your-server-ip>` with your server's actual IP address.
+2. **Access phpMyAdmin**:
+    To access phpMyAdmin, navigate to <http://your-domain.com/pma> (replace "your-domain.com" with your actual domain name).
 
-4.  **Stop phpMyAdmin**:
+3.  **Stop phpMyAdmin**:
     To prevent unauthorized access to phpMyAdmin after use, make sure to stop the container. Navigate to your WordPress project directory and execute the following command:
     ```bash
     docker compose stop phpmyadmin
     ```
-
-
-By following these steps, you can manage your site's database conveniently using PhpMyAdmin.
-
 
 ---
 
