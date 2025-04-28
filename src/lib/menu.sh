@@ -28,6 +28,9 @@ show_interactive_menu() {
     if [ -d "$WORDPRESS_DIR" ] && [ -n "$(find "$WORDPRESS_DIR" -mindepth 1 -type d 2>/dev/null)" ]; then
         print_menu_action "m" "Manage multiple sites"
     fi
+    if [ -d "$CADDY_DIR" ] && [ -f "${CADDY_DIR}/compose.yaml" ]; then
+        print_menu_action "r" "Restart Caddy"
+    fi
     print_menu_action "q" "Quit"
     print_separator
 
@@ -39,6 +42,11 @@ show_interactive_menu() {
         ;;
     "n" | "N")
         show_action_menu "new"
+        ;;
+    "r" | "R")
+        restart_sites caddy
+        echo -e "${YELLOW}Caddy has been restarted${NC}"
+        show_interactive_menu
         ;;
     "m" | "M")
         show_multi_site_menu "${sites[@]}"
