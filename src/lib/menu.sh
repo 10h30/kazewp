@@ -12,6 +12,7 @@ show_interactive_menu() {
     print_info "  $0 stop <domain>                 - Stop running WordPress sites"
     print_info "  $0 start <domain>                - Start an installed WordPress sites"
     print_info "  $0 restart <domain>              - Restart an installed WordPress sites"
+    print_info "  $0 restart caddy                 - Restart Caddy"
     print_info "  $0 restart all                   - Restart all WordPress sites and Caddy"
     print_info "  $0 delete <domain>               - Delete a WordPress site"
     print_info "  $0 delete all                    - Delete everything"
@@ -659,6 +660,15 @@ restart_sites() {
             fi
         done
         echo "All containers have been started."
+        ;;
+
+    "caddy")
+        if [ -f "${CADDY_DIR}/compose.yaml" ]; then
+            echo "Restarting Caddy reverse proxy..."
+            docker compose -f "${CADDY_DIR}/compose.yaml" restart
+        else
+            echo "Caddy reverse proxy is not installed."
+        fi
         ;;
 
     *)
